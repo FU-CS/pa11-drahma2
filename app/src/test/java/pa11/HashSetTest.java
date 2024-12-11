@@ -6,10 +6,160 @@ package pa11;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class HashSetTest {
 
     @Test void EmptySet() {
         HashSet set = new HashSet();
         assertEquals(set.size(), 0);
+        assertEquals(set.isEmpty(), true);
     }
+
+    @Test
+    void AddElements() {
+        HashSet set = new HashSet();
+        set.add("water");
+        set.add("gatorade");
+        set.add("coke");
+        
+        assertEquals(set.size(), 3);
+        assertEquals(set.contains("water"), true);
+        assertEquals(set.contains("gatorade"), true);
+        assertEquals(set.contains("coke"), true);
+        
+        set.add("water");
+        assertEquals(set.size(), 3);
+        set.add("beer");
+        assertEquals(set.size(), 4);
+    }
+
+    @Test
+    void RemoveElements(){
+        HashSet set = new HashSet();
+        set.add("water");
+        set.add("gatorade");
+        set.add("coke");
+
+        set.remove("water");
+        assertEquals(set.size(), 2);
+        assertEquals(set.contains("water"), false);
+        assertEquals(set.contains("gatorade"), true);
+        assertEquals(set.contains("coke"), true);
+
+        set.remove("coke");
+        set.remove("gatorade");
+
+        assertEquals(set.isEmpty(), true);
+        assertEquals(set.size(), 0);
+    }
+
+    @Test
+    void ClearSet(){
+        HashSet set = new HashSet();
+        set.add("water");
+        set.add("gatorade");
+        set.add("coke");
+
+        assertEquals(set.size(), 3);
+        assertEquals(set.isEmpty(), false);
+
+        set.clear();
+
+        assertEquals(set.size(), 0);
+        assertEquals(set.isEmpty(), true);
+    }
+
+    @Test
+    void Intersect(){
+        HashSet set1 = new HashSet();
+        set1.add("coke");
+        set1.add("water");
+        set1.add("coffee");
+
+        HashSet set2 = new HashSet();
+        set2.add("coke");
+        set2.add("gatorade");
+        set2.add("coffee");
+
+        HashSet intersect = set1.intersection(set2);
+
+        assertEquals(intersect.size(), 2);
+        assertEquals(intersect.contains("coke"), true);
+        assertEquals(intersect.contains("water"), false);
+        assertEquals(intersect.contains("coffee"), true);
+    }
+
+    @Test
+    void Union(){
+        HashSet set1 = new HashSet();
+        set1.add("coke");
+        set1.add("water");
+
+        HashSet set2 = new HashSet();
+        set2.add("coke");
+        set2.add("gatorade");
+
+        HashSet union = set1.union(set2);
+
+        assertEquals(union.size(), 3);
+        assertEquals(union.contains("coke"), true);
+        assertEquals(union.contains("water"), true);
+        assertEquals(union.contains("gatorade"), true);
+    }
+
+    @Test
+    void Difference(){
+        HashSet set1 = new HashSet();
+        set1.add("coke");
+        set1.add("water");
+        set1.add("juice");
+
+        HashSet set2 = new HashSet();
+        set2.add("coke");
+        set2.add("gatorade");
+
+        HashSet difference = set1.difference(set2);
+        assertEquals(difference.size(), 2);
+        assertEquals(difference.contains("coke"), false);
+        assertEquals(difference.contains("water"), true);
+        assertEquals(difference.contains("gatorade"), false);
+        assertEquals(difference.contains("juice"), true);
+    }
+
+    @Test
+    void Subset(){
+        HashSet set1 = new HashSet();
+        set1.add("coke");
+        set1.add("water");
+        set1.add("gatorade");
+
+        HashSet set2 = new HashSet();
+        set2.add("coke");
+        set2.add("water");
+
+        HashSet set3 = new HashSet();
+        set3.add("coke");
+        set3.add("water");
+        set3.add("lemonade");
+
+        assertEquals(set1.subset(set2), true);
+        assertEquals(set2.subset(set1), false);
+        assertEquals(set3.subset(set1), false);
+    }
+
+    @Test
+    void TestArray(){
+        HashSet set = new HashSet();
+        set.add("water");
+        set.add("coke");
+        set.add("pepsi");
+        set.add("gatorade");
+
+        String[] array = {"coke", "gatorade", "pepsi", "water"};
+
+        assertArrayEquals(set.toArray(), array);
+    }
+
 }
+
+
